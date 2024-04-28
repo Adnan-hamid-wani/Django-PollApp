@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="vh-100 d-flex justify-content-center align-items-center p-5" id="login-content" style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(255, 0, 0, 1)); box-shadow: 0 0 50px rgba(0,0,0,1);">
+    <div class="col-md-7 p-7 shadow-sm border rounded-5 border-primary bg-white" style="border-radius: 30px 0px 30px 0px;box-shadow: 0 0 30px rgba(255,0,1);">
+
+        <div class="col-md-6 offset-md-3">
+            <h2 style="text-align: center"><b>EDIT POLL</b></h2>
+            {% if messages %}
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endif %}
+            <form action="" method="POST" >
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group" >
+                    {{ field.errors }}
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+                {% endfor %}
+                <div style="text-align:center">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a class="btn btn-danger" href="{% url 'polls:delete_poll' poll.id %}" role="button" onclick="return confirm('Are you sure?')">Delete</a>
+                <a class="btn btn-warning" href="{% url 'polls:add_choice' poll.id %}" role="button">Add Choice</a>
+                </div>
+            </form>
+            <hr >
+
+            <div class="choices">
+                <h4 class="text-center mt-3"><b>CHOICES</b></h4>
+
+                <ul class="list-group">
+                    {% for choice in poll.choice_set.all %}
+                    <li class="list-group-item"><a href="{% url 'polls:choice_edit' choice.id %}"><i class="fas fa-pencil-alt"></i></a>&nbsp
+                        {{ choice.choice_text }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

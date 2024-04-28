@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="vh-100  justify-content-center align-items-center p-5" id="login-content" style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(255, 0, 0, 1)); box-shadow: 0 0 50px rgba(0,0,0,1);color : white;">
+    <div  style="box-shadow : (0 0 10px rgba(255,0,1);" >
+<div class="container">
+    <div class="row center">
+        <div class="col-md-5 mx-auto p-5  ">
+            <p>Already have an account? <a href="{% url 'accounts:login' %}">Login Here</a></p>
+            {% if messages %}
+            <div class="messages" >
+                {% for message in messages %}
+                <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
